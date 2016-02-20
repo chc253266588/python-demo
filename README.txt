@@ -10,4 +10,5 @@ demo9.py	上传文件
 demo10.py	重定向和错误
 demo11.py	COOKIES
 demo12.py	SESSION
+flaskr		小型博客
 
