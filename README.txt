@@ -9,3 +9,5 @@ demo8.py	接收请求数据/局部上下文/请求对象
 demo9.py	上传文件
 demo10.py	重定向和错误
 demo11.py	COOKIES
+demo12.py	SESSION
+
