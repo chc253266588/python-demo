@@ -1,0 +1,7 @@
+{% if session.get('user') %}
+	<h3>welcome {{ session.get('user')}}!  <a href='/logout'>logout</a></h3>
+{% else %}
+	<h3>welcome !  Please <a href='/login'>login</a></h3>
+{% endif %}
+<hr>
+{% block body%}{% endblock %}

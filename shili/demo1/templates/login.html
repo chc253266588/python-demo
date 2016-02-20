@@ -1,0 +1,9 @@
+<form method='post'>
+	username: <input type='text' name='username' />
+	<p>password: <input type='password' name='password' />
+	<p>
+	{% for message in get_flashed_messages() %}
+		{{ message }}
+	{% endfor %}
+	<p><input type="submit" value="login" /><input type='reset' value='reset' />
+</form>
