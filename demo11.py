@@ -12,7 +12,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
 	resp = make_response(render_template('hello.html'))
-	resp.set_cookie('username','the username')
+	resp.set_cookie('username',value='the username',max_age=300)
 	return resp
 #读取 cookies:
 @app.route('/cookie')

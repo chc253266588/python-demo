@@ -1,0 +1,9 @@
+<form method="post">
+	<p><h1>Login In</h1></p>
+	<input type="text" name="username" \>
+	{% for message in get_flashed_messages() %}
+		{{message}}
+	{% endfor %}
+	<p><input type="submit" value="login" \>
+	
+</form>

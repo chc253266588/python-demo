@@ -1,0 +1,6 @@
+{% if not session.get('username') %}
+	<h3>Please login in  <a href='/login'>login</a></h3>
+{% else %}
+	<h3>You had login in <a href='/logout'>logout</a></h3>
+{% endif %}
+{% block body %}{% endblock %}
