@@ -1,0 +1,12 @@
+{% extends 'base.html'%}
+{% block body %}
+{% for message in get_flashed_messages() %}
+	{{ message }}
+{% endfor %}
+<h1>Please write the form: </h1>
+<form method='post'>
+	title:	<input type='text' name='title'><p>
+	content:	<textarea rows='10' cols='50' name='content'>please write!</textarea><p>
+	<input type='submit' value="fabu">
+</form>
+{% endblock %}

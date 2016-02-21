@@ -7,6 +7,15 @@ app = Flask(__name__)
 app.secret_key='253266588'
 
 ADMIN = ['chenhc','admin','lobo']
+def sqlite(sql,*k):
+	conn = sqlite3.connect('/tmp/demo1.db')
+	cursor = conn.cursor()
+	cursor.execute(sql,k)
+	conn.commit()
+	result =  cursor.fetchall()
+	cursor.close()
+	conn.close()
+	return result
 
 @app.route('/')
 def index():
@@ -23,13 +32,8 @@ def login():
 	if request.method == 'POST':
 		username = request.form.get('username')
 		password = request.form.get('password')
-		conn = sqlite3.connect('/tmp/demo1.db')
-		cursor = conn.cursor()
-		sql = "select * from users where username='%s' and password='%s'" % (username,password)
-		cursor.execute(sql)
-		result = cursor.fetchall()
-		cursor.close()
-		conn.close()
+		sql = "select * from users where username=? and password=?"
+		result = sqlite(sql,username,password)
 		if result:
 			session['user'] = username
 			return redirect(url_for('index2'))
@@ -40,6 +44,26 @@ def login():
 def logout():
 	session.pop('user',None)
 	return redirect(url_for('index'))
+
+@app.route('/add/',methods=['GET','POST'])
+def add():
+	if not session.get('user'):
+		abort(401)
+	if request.method == 'POST':
+		title = request.form.get('title')
+		content = request.form.get('content')
+		try:
+			conn = sqlite3.connect('/tmp/demo1.db')
+			cursor = conn.cursor()
+			sql = "insert into contents (title,text) values (?,?)"
+			cursor.execute(sql,(title,content))
+			conn.commit()
+			cursor.close()
+			conn.close()
+			flash('add successful')
+		except:
+			flash('lianjie charu error')
+	return render_template("add.html")
 
 @app.errorhandler(401)
 def page_not_found(error):
