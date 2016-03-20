@@ -44,3 +44,22 @@
 	现在可以在 Python shell 里创建数据库，导入并调用刚才的函数:
 	>>> from flaskr import init_db
 	>>> init_db()
+
+5 请求数据库连接 
+	Flask 允许我们使用 before_request()，after_request() 和 teardown_request() 装饰器来实现这个功能:
+
+	@app.before_request
+	def before_request():
+    	g.db = connect_db()
+
+	@app.teardown_request
+	def teardown_request(exception):
+	    g.db.close()
+	使用 before_request() 装饰器的函数会在请求之前被调用而且不带参数。使用 after_request() 装饰器的函数会在请求之后被调用且传入将要发给客户端的响应。 它们必须返回那个响应对象或是不同的响应对象。但当异常抛出时，它们不一定会被执行， 这时可以使用 teardown_request() 装饰器。它装饰的函数将在响应构造后执行， 并不允许修改请求，返回的值会被忽略。如果在请求已经被处理的时候抛出异常，它会被传递到每个函数， 否则会传入一个 None 。
+
+	我们把当前的数据库连接保存在 Flask 提供的 g 特殊对象中。这个对象只能保存一次请求的信息， 并且在每个函数里都可用。不要用其它对象来保存信息，因为在多线程环境下将不可行。特殊的对象 g 在后台有一些神 奇的机制来保证它在做正确的事情。
+
+6 视图函数
+	显示条目
+	添加新条目
+	登录和注销
